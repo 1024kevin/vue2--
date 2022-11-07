@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-
+import router from '@/router'
 Vue.config.productionTip = false
-import { Button, Row, DatePicker } from 'element-ui';
-Vue.component('el-button', Button);
-Vue.component('el-row', Row);
-Vue.component('el-date-picker', DatePicker);
+
 
 new Vue({
-  
+  router,
   render: h => h(App),
 }).$mount('#app')
