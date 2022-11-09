@@ -1,24 +1,10 @@
-# vue2-admin
+# 本项目是仿京东商城项目
 
-## Project setup
-```
-yarn install
-```
+## 克隆到本地:
+### git clone https://github.com/1024kevin/vue2--.git
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## 本地运行前安装依赖
+### npm install
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 本项目使用vue2+vuex技术栈，故需要安装vuex适应版本
+### npm i vuex@3
