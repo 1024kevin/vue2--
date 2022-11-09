@@ -5,7 +5,7 @@ import { reqCategory/* , reqBannerList, reqFloorList */ } from '@/api'
 //仓库存储数据的地方
 let state = {
     //商品分类的数据,仓库里面数据起始数值不要瞎写【服务器返回的是啥】
-    category: [],
+    categoryList: [],
     //首页轮播图的数据
     // bannerList: [],
     // //floor数据
@@ -14,8 +14,8 @@ let state = {
 //唯一可以修改仓库数据地方【工人】
 let mutations = {
 
-    GETCATEGORY(state, category) {
-        state.category = category;
+    CATEGORYLIST(state, categoryList) {
+        state.categoryList = categoryList;
     }
     ,
     // GETBANNERLIST(state, bannerList) {
@@ -31,15 +31,16 @@ let mutations = {
 let actions = {
     //商品分类的actions
     //actions地盘:可不可以书写异步语句
-    async getCategory({ commit, state, dispatch }) {
+    async categoryList({ commit, state, dispatch }) {
         //获取服务器的数据,存储在vuex仓库中
         //reqCategory函数执行,返回的是Promise对象【pending、成功、失败】
         //await 等待成功的结果
         let result = await reqCategory();
+        console.log(result);
         //判断服务器返回的状态是200->成功
         if (result.code == 200) {
             //提交mutation存储服务器数据
-            commit("GETCATEGORY", result.data);
+            commit("CATEGORYLIST", result.data);
         }
     },
     //获取banner图的action
