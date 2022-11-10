@@ -16,6 +16,7 @@ let mutations = {
 
     CATEGORYLIST(state, categoryList) {
         state.categoryList = categoryList;
+        state.categoryList.shift();
     }
     ,
     // GETBANNERLIST(state, bannerList) {
