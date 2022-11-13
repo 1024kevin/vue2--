@@ -1,5 +1,4 @@
 # 本项目是仿京东商城项目
-email test
 
 ## 克隆到本地:
 ### git clone https://github.com/1024kevin/vue2--.git
