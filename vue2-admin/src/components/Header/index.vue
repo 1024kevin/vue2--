@@ -4,7 +4,7 @@
             <div class="top">
                 <div class="container">
                     <div class="loginList">
-                        <p>尚品汇欢迎您！</p>
+                        <p>Kevin欢迎您！</p>
                         <p>
                             <span>请</span>
                             <router-link to="/Login">登录</router-link> 
@@ -27,7 +27,7 @@
             <div class="bottom">
                 <h1 class="logoArea">
                     <router-link class="logo" to="/Home">
-                        <img src="./images/logo.png" alt="">
+                        <img src="./images/logo.png" alt="" height="80px" width="30px">
                     </router-link>
                 </h1>
                 <div class="searchArea">

@@ -1,13 +1,16 @@
 //home模块专享的小仓库
 //任何的小仓库:state、mutations、actions、getters 
 //引入请求函数
-import { reqCategory/* , reqBannerList, reqFloorList */ } from '@/api'
+import {
+    reqCategory,/* , reqBannerList, reqFloorList */
+    reqGetBannerList
+} from '@/api'
 //仓库存储数据的地方
 let state = {
     //商品分类的数据,仓库里面数据起始数值不要瞎写【服务器返回的是啥】
     categoryList: [],
     //首页轮播图的数据
-    // bannerList: [],
+    bannerList: [],
     // //floor数据
     // floorList: []
 };
@@ -17,12 +20,11 @@ let mutations = {
     CATEGORYLIST(state, categoryList) {
         state.categoryList = categoryList;
         state.categoryList.shift();
-    }
-    ,
-    // GETBANNERLIST(state, bannerList) {
-    //     state.bannerList = bannerList;
-    //     // console.log('mutation修改数据')
-    // },
+    },
+    GETBANNERLIST(state, bannerList) {
+        state.bannerList = bannerList;
+        // console.log('mutation修改数据')
+    },
     // GETFLOORLIST(state, floorList) {
     //     state.floorList = floorList;
     // }
@@ -44,6 +46,15 @@ let actions = {
             commit("CATEGORYLIST", result.data);
         }
     },
+    //获取banner轮播图数据的action
+    async getBannerList({ commit, state, dispatch }) {
+        console.log(commit);
+        let result = await reqGetBannerList();
+        console.log(result);
+        if (result.code == 200) {
+            commit('GETBANNERLIST', result.data);
+        }
+    }
     //获取banner图的action
     // async getBannerList({ commit, state, dispatch }) {
     //     //获取首页数据
