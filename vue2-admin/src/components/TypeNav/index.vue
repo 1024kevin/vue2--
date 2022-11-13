@@ -115,7 +115,7 @@ export default {
         if (this.$route.path != '/Home') {
             this.show = false;
         }
-        this.$store.dispatch('categoryList')
+
     },
     computed: {
         ...mapState({

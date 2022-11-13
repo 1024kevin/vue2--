@@ -55,19 +55,20 @@ methods: {
         // this.$router.push(`/Search/${this.keyword}?k=${this.keyword}`)
 
         // 对象形式传参
-        this.$router.push({
-            name:'Search',
-            params:{
-                //这样的话可以解决params时传入空字符串的问题
-                keyword:this.keyword || undefined
-            },
-            query:{
-                k:this.keyword
-            }
-        })
+        let locations = {
+        name: "Search",
+        params: { keyword: this.keyword || undefined },
+      };
+      //确定路径当中有query参数
+      if (this.$route.query) {
+        locations.query = this.$route.query;
+      }
+
+      this.$router.push(locations);
     }
-},
-}
+    }
+    }
+
 </script>
 
 <style lang="less" scoped>
