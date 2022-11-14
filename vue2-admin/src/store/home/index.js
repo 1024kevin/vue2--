@@ -3,7 +3,8 @@
 //引入请求函数
 import {
     reqCategory,/* , reqBannerList, reqFloorList */
-    reqGetBannerList
+    reqGetBannerList,
+    reqGetFloorList
 } from '@/api'
 //仓库存储数据的地方
 let state = {
@@ -12,7 +13,7 @@ let state = {
     //首页轮播图的数据
     bannerList: [],
     // //floor数据
-    // floorList: []
+    floorList: []
 };
 //唯一可以修改仓库数据地方【工人】
 let mutations = {
@@ -25,9 +26,9 @@ let mutations = {
         state.bannerList = bannerList;
         // console.log('mutation修改数据')
     },
-    // GETFLOORLIST(state, floorList) {
-    //     state.floorList = floorList;
-    // }
+    GETFLOORLIST(state, floorList) {
+        state.floorList = floorList;
+    }
 
 };
 //可以处理业务逻辑【if、异步语句等等】
@@ -53,6 +54,13 @@ let actions = {
         console.log(result);
         if (result.code == 200) {
             commit('GETBANNERLIST', result.data);
+        }
+    },
+    async getFloorList({ commit }) {
+        let result = await reqGetFloorList();
+        console.log(result);
+        if (result.code == 200) {
+            commit('GETFLOORLIST', result.data);
         }
     }
     //获取banner图的action

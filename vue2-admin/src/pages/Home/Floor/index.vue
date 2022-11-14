@@ -3,29 +3,11 @@
   <div class="floor">
     <div class="py-container">
       <div class="title clearfix">
-        <h3 class="fl">家用电器</h3>
+        <h3 class="fl">{{floorList.name}}</h3>
         <div class="fr">
           <ul class="nav-tabs clearfix">
-            <li class="active">
-              <a href="#tab1" data-toggle="tab">热门</a>
-            </li>
-            <li>
-              <a href="#tab2" data-toggle="tab">大家电</a>
-            </li>
-            <li>
-              <a href="#tab3" data-toggle="tab">生活电器</a>
-            </li>
-            <li>
-              <a href="#tab4" data-toggle="tab">厨房电器</a>
-            </li>
-            <li>
-              <a href="#tab5" data-toggle="tab">应季电器</a>
-            </li>
-            <li>
-              <a href="#tab6" data-toggle="tab">空气/净水</a>
-            </li>
-            <li>
-              <a href="#tab7" data-toggle="tab">高端电器</a>
+            <li class="active" v-for="(nav,index) in floorList.navList" :key="index">
+              <a href="#tab1" data-toggle="tab">{{nav.text}}</a>
             </li>
           </ul>
         </div>
@@ -34,21 +16,16 @@
         <div class="tab-pane">
           <div class="floor-1">
             <div class="blockgary">
-              <ul class="jd-list">
-                <li>节能补贴</li>
-                <li>4K电视</li>
-                <li>空气净化器</li>
-                <li>IH电饭煲</li>
-                <li>滚筒洗衣机</li>
-                <li>电热水器</li>
+              <ul class="jd-list" >
+                <li v-for="(keyword,index) in floorList.keywords" :key="index">{{keyword}}</li>
               </ul>
-              <img src="./images/floor-1-1.png" />
+              <img :src="floorList.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" id="floor2Swiper">
+              <div class="swiper-container" ref="cur" id="floor2Swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b01.png" />
+                  <div class="swiper-slide" v-for="(item,index) in floorList.carouselList" :key="item.id" >
+                    <img :src="item.imgUrl" />
                   </div>
 <!--                   <div class="swiper-slide">
                     <img src="./images/floor-1-b02.png" />
@@ -94,8 +71,43 @@
 </template>
 
 <script>
+import Swiper from 'swiper';
 export default {
   name: "Floor",
+  props:['floorList'],
+  mounted() {
+          var banner= new Swiper(this.$refs.cur, {
+          //设置轮播图防线
+          direction: "horizontal",
+          //开启循环模式
+          loop: true,
+          // 如果需要分页器
+          pagination: {
+            el: ".swiper-pagination",
+            //分页器类型
+            type: "bullets",
+            //点击分页器，切换轮播
+            clickable: true,
+          },
+          autoplay: {
+                delay: 1000,
+                //新版本的写法：目前是5版本
+                // pauseOnMouseEnter: true,
+                //如果设置为true，当切换到最后一个slide时停止自动切换
+                stopOnLastSlide: true,
+                //用户操作swiper之后，是否禁止autoplay
+                disableOnInteraction: false,
+              },
+          navigation:{
+            nextEl:".swiper-button-next",
+            preEl:"swiper-button-prev"
+          }
+  });
+}
+      
+    
+  
+ 
 };
 </script>
 

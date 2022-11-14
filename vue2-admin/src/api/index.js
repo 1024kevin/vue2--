@@ -10,6 +10,9 @@ export const reqCategory = () => {
     return requests({ method: 'get', url: '/product/getBaseCategoryList' });
 }
 //获取轮播图的mock数据
-export const reqGetBannerList=()=>{
-    return mockRequests({method:'get',url:'/banner'});
+export const reqGetBannerList = () => {
+    return mockRequests({ method: 'get', url: '/banner' });
+}
+export const reqGetFloorList = () => {
+    return mockRequests({ method: 'get', url: '/floor' });
 }

@@ -33,16 +33,18 @@ export default {
 
 <style lang="less" scoped>
 .today-recommend {
+    
     .py-container {
         width: 1200px;
         margin: 0 auto;
+/*         flex: 1;
+        overflow: hidden; */
 
         .recommend {
             height: 165px;
             background-color: #eaeaea;
             margin: 10px 0;
             display: flex;
-
             .clock {
                 width: 16.67%;
                 background-color: #5c5251;

@@ -10,5 +10,5 @@ import floor from './floor.json';
 //Mock插件：中间件默认是GET请求
 Mock.mock("/mock/banner", { code: 200, data: banner });//轮播图数据
 //Mock插件：中间件默认是GET请求
-Mock.mock('/mock/floor', { code: 200, data: floor });
+Mock.mock('/mock/floor', { code: 200, data: floor });//floor组件数据
 

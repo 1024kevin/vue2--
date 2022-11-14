@@ -113,8 +113,19 @@ export default {
       bannerList:state=>state.home.bannerList
     })
   },
-  updated(){
-    var mySwiper = new Swiper(document.querySelector(".swiper-container"), {
+
+  //因为swiper中要获取dom结构，所以该swiper要达到轮播图的功能必须等待dom操作更新渲染完成才可以
+  //获取轮播图数据后需要将轮播图的swiper挂载到组件上
+  //1.由于mounted中对于v-for遍历出的数据还没加载完毕，故不能放在mounted上
+  //2.mounted+定时器配合完成，待v-for遍历完成后，定时器在一定时间内启动，即可成功加载，但是这样不好
+  //3.由于v-for是动态加载数据，所以可以将swiper挂载到watch上，配合nexttick即可等待数据更新并挂载在dom后启动轮播图
+
+  //Vue.nextTick([callback,context])
+  //在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+  watch:{
+   bannerList:{
+    handler(newvalue,oldvalue){
+      this.$nextTick(()=>{var banner= new Swiper(document.querySelector(".swiper-container"), {
           //设置轮播图防线
           direction: "horizontal",
           //开启循环模式
@@ -127,11 +138,22 @@ export default {
             //点击分页器，切换轮播
             clickable: true,
           },
+          autoplay: {
+                delay: 1000,
+                //新版本的写法：目前是5版本
+                // pauseOnMouseEnter: true,
+                //如果设置为true，当切换到最后一个slide时停止自动切换
+                // stopOnLastSlide: true,
+                //用户操作swiper之后，是否禁止autoplay
+                disableOnInteraction: false,
+              },
           navigation:{
             nextEl:".swiper-button-next",
             preEl:"swiper-button-prev"
           }
-  })
+  })})
+    }
+   }
 }
 }
 </script>
