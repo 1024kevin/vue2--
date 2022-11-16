@@ -56,7 +56,7 @@ export default {
   name: "Floor",
   props:['floorList'],
   //因为请求数据是父组件发送的，并不影响次组件，而且该数据是通过props传过来的，故子组件渲染挂载完毕时，数据已经加载完毕并且dom结构已渲染完毕
-      
+  
     
   
  

@@ -7,7 +7,7 @@ import {
     reqGetFloorList
 } from '@/api'
 //仓库存储数据的地方
-let state = {
+const state = {
     //商品分类的数据,仓库里面数据起始数值不要瞎写【服务器返回的是啥】
     categoryList: [],
     //首页轮播图的数据
@@ -16,7 +16,7 @@ let state = {
     floorList: []
 };
 //唯一可以修改仓库数据地方【工人】
-let mutations = {
+const mutations = {
 
     CATEGORYLIST(state, categoryList) {
         state.categoryList = categoryList;
@@ -32,7 +32,7 @@ let mutations = {
 
 };
 //可以处理业务逻辑【if、异步语句等等】
-let actions = {
+const actions = {
     //商品分类的actions
     //actions地盘:可不可以书写异步语句
     async categoryList({ commit, state, dispatch }) {
@@ -40,7 +40,6 @@ let actions = {
         //reqCategory函数执行,返回的是Promise对象【pending、成功、失败】
         //await 等待成功的结果
         let result = await reqCategory();
-        console.log(result);
         //判断服务器返回的状态是200->成功
         if (result.code == 200) {
             //提交mutation存储服务器数据
@@ -49,16 +48,13 @@ let actions = {
     },
     //获取banner轮播图数据的action
     async getBannerList({ commit, state, dispatch }) {
-        console.log(commit);
         let result = await reqGetBannerList();
-        console.log(result);
         if (result.code == 200) {
             commit('GETBANNERLIST', result.data);
         }
     },
     async getFloorList({ commit }) {
         let result = await reqGetFloorList();
-        console.log(result);
         if (result.code == 200) {
             commit('GETFLOORLIST', result.data);
         }
@@ -66,7 +62,7 @@ let actions = {
     //获取banner图的action
     // async getBannerList({ commit, state, dispatch }) {
     //     //获取首页数据
-    //     let result = await reqBannerList();
+    //     const result = await reqBannerList();
     //     if (result.code == 200) {
     //         // console.log('actions发请求')
     //         commit("GETBANNERLIST", result.data);
@@ -74,7 +70,7 @@ let actions = {
     // },
     // //获取Floor组件的数据
     // async getFloorList({ commit, state, dispatch }) {
-    //     let result = await reqFloorList();
+    //     const result = await reqFloorList();
     //     if (result.code == 200) {
     //         commit('GETFLOORLIST', result.data);
     //         // console.log(result.data);
@@ -82,7 +78,7 @@ let actions = {
     // }
 };
 //仓库计算属性
-let getters = {};
+const getters = {};
 
 //对外暴露小仓库
 export default {
