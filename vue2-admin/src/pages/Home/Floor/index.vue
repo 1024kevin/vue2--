@@ -21,46 +21,27 @@
               </ul>
               <img :src="floorList.imgUrl" />
             </div>
-            <div class="floorBanner">
-              <div class="swiper-container" ref="cur" id="floor2Swiper">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide" v-for="(item,index) in floorList.carouselList" :key="item.id" >
-                    <img :src="item.imgUrl" />
-                  </div>
-<!--                   <div class="swiper-slide">
-                    <img src="./images/floor-1-b02.png" />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b03.png" />
-                  </div> -->
-                </div>
-                <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
-
-                <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
-            </div>
+            <!-- 轮播图 -->
+            <Carousel :List="floorList.carouselList" ></Carousel>
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-2.png" />
+                <img :src="floorList.recommendList[0]" />
               </div>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-3.png" />
+                <img :src="floorList.recommendList[1]" />
               </div>
             </div>
             <div class="split center">
-              <img src="./images/floor-1-4.png" />
+              <img :src="floorList.bigImg" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-5.png" />
+                <img :src="floorList.recommendList[2]"/>
               </div>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-6.png" />
+                <img :src="floorList.recommendList[3]"/>
               </div>
             </div>
           </div>
@@ -71,39 +52,10 @@
 </template>
 
 <script>
-import Swiper from 'swiper';
 export default {
   name: "Floor",
   props:['floorList'],
-  mounted() {
-          var banner= new Swiper(this.$refs.cur, {
-          //设置轮播图防线
-          direction: "horizontal",
-          //开启循环模式
-          loop: true,
-          // 如果需要分页器
-          pagination: {
-            el: ".swiper-pagination",
-            //分页器类型
-            type: "bullets",
-            //点击分页器，切换轮播
-            clickable: true,
-          },
-          autoplay: {
-                delay: 1000,
-                //新版本的写法：目前是5版本
-                // pauseOnMouseEnter: true,
-                //如果设置为true，当切换到最后一个slide时停止自动切换
-                stopOnLastSlide: true,
-                //用户操作swiper之后，是否禁止autoplay
-                disableOnInteraction: false,
-              },
-          navigation:{
-            nextEl:".swiper-button-next",
-            preEl:"swiper-button-prev"
-          }
-  });
-}
+  //因为请求数据是父组件发送的，并不影响次组件，而且该数据是通过props传过来的，故子组件渲染挂载完毕时，数据已经加载完毕并且dom结构已渲染完毕
       
     
   
