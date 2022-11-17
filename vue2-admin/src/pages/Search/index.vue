@@ -116,15 +116,73 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'Search',
+    data() {
+    return {
+      //将来Search模块搜索的条件
+      searchParams: {
+        category1Id: "", //一级分类的id
+        category2Id: "", //二级分类的id
+        category3Id: "", //三级分类的id
+        categoryName: "", //商品的名字
+        keyword: "", //用户搜索的关键字
+        props: [], //商品属性的搜索条件
+        trademark: "", //品牌的搜索条件
+        order: "1:desc", //排序的参数 【默认初始值:1:desc】
+        pageNo: 1, //当前分页器的页码  【默认初始值:1】
+        pageSize: 10, //代表当前一页显示几条数据 【默认初始值:10】
+      },
+    };
+  },
 
     components: {
       SearchSelector
     },
+    beforeCreate() {
+      
+    },
+    created() {
+      
+    },
+    beforeMount() {
+     
+      //路由变化整理参数：手机最新的商品名字、商品1|2|3ID
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      //再次发请求
+  
+
+    },
+    watch: {
+    //监听组件VC的$route属性
+    //$route:{},应该用深度监听呀?
+    //$route，是vue-router提供的
+    $route() {
+      //再次整理最新的商品名字参数
+      // this.searchParams.category1Id = this.$route.query.category1Id;
+      // this.searchParams.category2Id = this.$route.query.category2Id;
+      // this.searchParams.category3Id = this.$route.query.category3Id;
+      // this.searchParams.categoryName = this.$route.query.categoryName;
+
+      //先把用户前面存储的1|2|3级别ID清除
+      //发ajax的时候,属性值为undefind,甚至参数K都不携带了【10个搜索条件,可有可无的】
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+      //路由变化整理参数：手机最新的商品名字、商品1|2|3ID
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      //再次发请求
+      this.getData();
+    },
+  },
     mounted() {
-      this.$store.dispatch('getSearchList')
+      this.getData();
     },
     computed: {
       ...mapGetters(["goodsList"]),
+    },
+    methods: {
+      getData(){
+        this.$store.dispatch('getSearchList',this.searchParams)
+      }
     },
   }
 </script>
