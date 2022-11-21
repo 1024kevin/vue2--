@@ -31,7 +31,8 @@ watch:{
    List:{
     immediate:true,
     handler(){
-      this.$nextTick(()=>{var banner= new Swiper(this.$refs.cur, {
+      this.$nextTick(()=>{
+        var banner= new Swiper(this.$refs.cur, {
           //设置轮播图防线
           direction: "horizontal",
           //开启循环模式
@@ -43,9 +44,15 @@ watch:{
             type: "bullets",
             //点击分页器，切换轮播
             clickable: true,
+           
+          
           },
+          mousewheel: true,
+          simulateTouch : false,
+
+          grabCursor: true,
           autoplay: {
-                delay: 1000,
+                delay: 3000,
                 //新版本的写法：目前是5版本
                 // pauseOnMouseEnter: true,
                 //如果设置为true，当切换到最后一个slide时停止自动切换
@@ -56,13 +63,22 @@ watch:{
           navigation:{
             nextEl:".swiper-button-next",
             prevEl:".swiper-button-prev"
-          }
-  })})
-    }
-   }
-}
+          },
+  });
+  banner.el.onmouseover = function(){
+    banner.autoplay.stop();
+  };
+        //鼠标离开开始轮播
+        banner.el.onmouseout = function () {
+          banner.autoplay.start();
+        };
 
-}
+    });
+  },
+},
+},
+
+};
 </script>
 
 <style>
