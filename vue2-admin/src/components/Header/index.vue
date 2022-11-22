@@ -66,7 +66,13 @@ methods: {
 
       this.$router.push(locations);
     }
-    }
+    },
+    mounted() {
+        //通过全局事件总线清除输入框
+        this.$bus.$on('clear',()=>{
+            this.keyword=''
+        })
+    },
     }
 
 </script>

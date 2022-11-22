@@ -11,11 +11,10 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            11
-            <li class="with-x" v-if="searchParams.categoryName">
-              {{ searchParams.categoryName
-              }}<i @click="removeCategoryName">x</i>
-            </li>
+            <!-- 分类面包屑标签 -->
+            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
+            <!-- 关键词面包屑标签 -->
+            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword}}<i @click="removeKeyword">x</i></li>
           </ul>
         </div>
 
@@ -190,17 +189,26 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
+    //删除分类面包屑标签
     removeCategoryName() {
       //首先要讲参数清空，然后再加载一次数据
       this.searchParams.categoryName = undefined;
       this.searchParams.category1Id = undefined;
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
-
       //再把地址定向返回到之前的search主页面
         this.$router.push({name:'Search',params:this.$route.params})
-      
     },
+    //删除关键词面包屑标签
+    removeKeyword(){
+      //将参数中keyword置空
+      this.searchParams.keyword = undefined;
+      //再次发送请求
+      this.getData();
+      this.$bus.$emit('clear');
+      this.$router.push({name:'Search',query:this.$route.query})
+      
+    }
   },
 };
 </script>

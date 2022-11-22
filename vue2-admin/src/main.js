@@ -11,6 +11,9 @@ Vue.config.productionTip = false
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Carousel.name, Carousel);
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   router,
   store,
   render: h => h(App),
