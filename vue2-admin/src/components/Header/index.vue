@@ -2,6 +2,7 @@
           <header class="header">
             <!-- 头部的第一行 -->
             <div class="top">
+               
                 <div class="container">
                     <div class="loginList">
                         <p>Kevin欢迎您！</p>
@@ -23,6 +24,7 @@
                     </div>
                 </div>
             </div>
+
             <!--头部第二行 搜索区域-->
             <div class="bottom">
                 <h1 class="logoArea">
@@ -43,6 +45,7 @@
 
 <script>
 export default {
+    
 name:"Header",
 data() {
     return {

@@ -43,22 +43,22 @@ watch:{
             //分页器类型
             type: "bullets",
             //点击分页器，切换轮播
-            clickable: true,
+            // clickable: true,
            
           
           },
-          mousewheel: true,
-          simulateTouch : false,
+          // mousewheel: true,
+          // simulateTouch : false,
 
           grabCursor: true,
           autoplay: {
-                delay: 3000,
+                // delay: 3000,
                 //新版本的写法：目前是5版本
                 // pauseOnMouseEnter: true,
                 //如果设置为true，当切换到最后一个slide时停止自动切换
                 // stopOnLastSlide: true,
                 //用户操作swiper之后，是否禁止autoplay
-                disableOnInteraction: false,
+                // disableOnInteraction: false,
               },
           navigation:{
             nextEl:".swiper-button-next",
