@@ -15,11 +15,15 @@
             <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
             <!-- 关键词面包屑标签 -->
             <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword}}<i @click="removeKeyword">x</i></li>
+            <!-- 品牌信息面包屑标签 -->
+            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1]}}<i @click="removeTradeMark">x</i></li>
+            <!-- 属性信息面包屑标签 -->
+            <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="index">{{ attrValue.split(":")[1]}}<i @click="removeAttr(index)">x</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector  @trademarkInfo="trademarkInfo" @attrInfo="attrInfo"/>
 
         <!--details-->
         <div class="details clearfix">
@@ -27,22 +31,22 @@
             <div class="navbar-inner filter">
               <ul class="sui-nav">
                 <li class="active">
-                  <a href="#">综合</a>
+                  <a >综合</a>
                 </li>
                 <li>
-                  <a href="#">销量</a>
+                  <a >销量</a>
                 </li>
                 <li>
-                  <a href="#">新品</a>
+                  <a >新品</a>
                 </li>
                 <li>
-                  <a href="#">评价</a>
+                  <a>评价</a>
                 </li>
                 <li>
-                  <a href="#">价格⬆</a>
+                  <a>价格⬆</a>
                 </li>
                 <li>
-                  <a href="#">价格⬇</a>
+                  <a>价格⬇</a>
                 </li>
               </ul>
             </div>
@@ -186,6 +190,18 @@ export default {
     ...mapGetters(["goodsList"]),
   },
   methods: {
+    trademarkInfo(trademark){
+      //点击面包屑栏标签
+      this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`;
+      //刷新页面发送请求
+      this.getData();
+    },
+    //属性信息面包屑标签
+    attrInfo(attr,attrvalue){
+      let props= `${attr.attrId}:${attrvalue}:${attr.attrName}`
+      if(this.searchParams.props.indexOf(props) == -1)  this.getData(), this.searchParams.props.push(props);
+     
+    },
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
@@ -199,7 +215,12 @@ export default {
       //再把地址定向返回到之前的search主页面
         this.$router.push({name:'Search',params:this.$route.params})
     },
-    //删除关键词面包屑标签
+    //删除品牌信息标签
+    removeTradeMark(){
+      this.searchParams.trademark=undefined;
+      this.getData();
+    },
+    //删除搜索框参数关键词面包屑标签
     removeKeyword(){
       //将参数中keyword置空
       this.searchParams.keyword = undefined;
@@ -208,8 +229,14 @@ export default {
       this.$bus.$emit('clear');
       this.$router.push({name:'Search',query:this.$route.query})
       
-    }
+    },
+      //删除属性面包屑标签
+  removeAttr(index){
+    this.searchParams.props.splice(index,1)
+    this.getData()
+  }
   },
+
 };
 </script>
 
