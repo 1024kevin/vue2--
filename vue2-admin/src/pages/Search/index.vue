@@ -12,52 +12,49 @@
           </ul>
           <ul class="fl sui-tag">
             <!-- 分类面包屑标签 -->
-            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i
+                @click="removeCategoryName">x</i></li>
             <!-- 关键词面包屑标签 -->
-            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword}}<i @click="removeKeyword">x</i></li>
+            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">x</i></li>
             <!-- 品牌信息面包屑标签 -->
-            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1]}}<i @click="removeTradeMark">x</i></li>
+            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1] }}<i
+                @click="removeTradeMark">x</i></li>
             <!-- 属性信息面包屑标签 -->
-            <li class="with-x" v-for="(attrValue,index) in searchParams.props" :key="index">{{ attrValue.split(":")[1]}}<i @click="removeAttr(index)">x</i></li>
+            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">{{
+                attrValue.split(":")[1]
+            }}<i @click="removeAttr(index)">x</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector  @trademarkInfo="trademarkInfo" @attrInfo="attrInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a >综合</a>
+                <li :class="{ active: isOne }" @click="sort(1)">
+                  <a>综合<span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{ 'icon-DOWN': isDesc, 'icon-UP': isAsc }"></span></a>
                 </li>
-                <li>
-                  <a >销量</a>
+                <li :class="{ active: isTwo }" @click="sort(2)">
+                  <a>价格<span
+                      v-show="isTwo"
+                      class="iconfont"
+                      :class="{ 'icon-DOWN': isDesc, 'icon-UP': isAsc }"></span></a>
                 </li>
-                <li>
-                  <a >新品</a>
-                </li>
-                <li>
-                  <a>评价</a>
-                </li>
-                <li>
-                  <a>价格⬆</a>
-                </li>
-                <li>
+<!--                 <li>
                   <a>价格⬇</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li
-                class="yui3-u-1-5"
-                v-for="(good, index) in goodsList"
-                :key="good.id"
-              >
+              <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank">
@@ -71,56 +68,31 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="item.html" :title="good.title">{{
-                      good.title
+                    <a  :title="good.title">{{
+                        good.title
                     }}</a>
                   </div>
                   <div class="commit">
-                    <i class="command">已有<span>2000</span>人评价</i>
+                    <i class="command">已有<span>{{ good.id }}</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
-                      class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
-                    >
-                    <a href="javascript:void(0);" class="sui-btn btn-bordered"
-                      >收藏</a
-                    >
+                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
+
+          <!-- 分页的地方 -->
           <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
+            <Pagination
+              :total="total"
+              :pageSize="searchParams.pageSize"
+              :pageNo="searchParams.pageNo"
+              :pagerCount="5"
+              @currentPage="currentPage"
+            ></Pagination>
           </div>
         </div>
       </div>
@@ -130,7 +102,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters,mapState} from "vuex";
 export default {
   name: "Search",
   data() {
@@ -154,8 +126,8 @@ export default {
   components: {
     SearchSelector,
   },
-  beforeCreate() {},
-  created() {},
+  beforeCreate() { },
+  created() { },
   beforeMount() {
     //路由变化整理参数：手机最新的商品名字、商品1|2|3ID
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
@@ -188,19 +160,34 @@ export default {
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    ...mapState({
+       total:state=>state.search.searchList.total
+    }),
+    isOne() {
+      return this.searchParams.order.indexOf('1') != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf('2') != -1;
+    },
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
   },
   methods: {
-    trademarkInfo(trademark){
+    trademarkInfo(trademark) {
       //点击面包屑栏标签
-      this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`;
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
       //刷新页面发送请求
       this.getData();
     },
     //属性信息面包屑标签
-    attrInfo(attr,attrvalue){
-      let props= `${attr.attrId}:${attrvalue}:${attr.attrName}`
-      if(this.searchParams.props.indexOf(props) == -1)  this.getData(), this.searchParams.props.push(props);
-     
+    attrInfo(attr, attrvalue) {
+      let props = `${attr.attrId}:${attrvalue}:${attr.attrName}`
+      if (this.searchParams.props.indexOf(props) == -1) this.getData(), this.searchParams.props.push(props);
+
     },
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
@@ -213,28 +200,55 @@ export default {
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
       //再把地址定向返回到之前的search主页面
-        this.$router.push({name:'Search',params:this.$route.params})
+      this.$router.push({ name: 'search', params: this.$route.params })
     },
     //删除品牌信息标签
-    removeTradeMark(){
-      this.searchParams.trademark=undefined;
+    removeTradeMark() {
+      this.searchParams.trademark = undefined;
       this.getData();
     },
     //删除搜索框参数关键词面包屑标签
-    removeKeyword(){
+    removeKeyword() {
       //将参数中keyword置空
       this.searchParams.keyword = undefined;
       //再次发送请求
       this.getData();
       this.$bus.$emit('clear');
-      this.$router.push({name:'Search',query:this.$route.query})
-      
+      this.$router.push({ name: 'search', query: this.$route.query })
+
     },
-      //删除属性面包屑标签
-  removeAttr(index){
-    this.searchParams.props.splice(index,1)
-    this.getData()
-  }
+    //删除属性面包屑标签
+    removeAttr(index) {
+      this.searchParams.props.splice(index, 1)
+      this.getData()
+    },
+     //排序回调
+    //参数形式:1:desc
+    //1|2,标记flag,到底谁是高亮状态
+    //asc|desc排序【sortType】,到底是升序还是降序
+    sort(flag) {
+      //获取每一次order初始值,与用户点击传递进来的flag进行判断
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSortType = this.searchParams.order.split(":")[1];
+      //准备一个新的数值，将来赋值给order
+      let newOrder = "";
+      //高亮的判断
+      if (flag == originFlag) {
+        newOrder = `${originFlag}:${originSortType == "desc" ? "asc" : "desc"}`;
+      } else {
+        //不是高亮的按钮
+        newOrder = `${flag}:desc`;
+      }
+      //重新给order赋予新的数值
+      this.searchParams.order = newOrder;
+      //重新发一次请求
+      this.getData();
+    },
+    currentPage(pageNo) {
+      //父组件整理参数
+      this.searchParams.pageNo = pageNo;
+       this.getData();
+    },
   },
 
 };

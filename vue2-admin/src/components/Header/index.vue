@@ -28,7 +28,7 @@
             <!--头部第二行 搜索区域-->
             <div class="bottom">
                 <h1 class="logoArea">
-                    <router-link class="logo" to="/Home">
+                    <router-link class="logo" to="/home">
                         <img src="./images/logo.png" alt="" height="80px" width="30px">
                     </router-link>
                 </h1>
@@ -59,7 +59,7 @@ methods: {
 
         // 对象形式传参
         let locations = {
-        name: "Search",
+        name: "search",
         params: { keyword: this.keyword || undefined },
       };
       //确定路径当中有query参数

@@ -69,7 +69,7 @@ export default {
         //为此可以添加点击事件委派给最近的父元素
         //先给一级、二级、三级相对应的连接加上自定义属性，以此区分是否为所需要的连接a标签
         changeShow() {
-            if (this.$route.path != '/Home') {
+            if (this.$route.path != '/home') {
                 this.show = true;
             }
         },
@@ -80,7 +80,7 @@ export default {
             //如果该节点有categoryname属性，那么一定是a标签
             if (categoryname) {
                 let location = {
-                    name: 'Search',
+                    name: 'search',
                     query: { categoryName: categoryname },
                 };
                 if (category1id) {
@@ -106,13 +106,13 @@ export default {
         }, 50),
         leaveIndex() {
             this.currentIndex = -1;
-            if (this.$route.path != "/Home") {
+            if (this.$route.path != "/home") {
                 this.show = false;
             }
         }
     },
     mounted() {
-        if (this.$route.path != '/Home') {
+        if (this.$route.path != '/home') {
             this.show = false;
         }
 
