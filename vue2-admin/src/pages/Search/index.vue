@@ -47,7 +47,7 @@
                       :class="{ 'icon-DOWN': isDesc, 'icon-UP': isAsc }"></span></a>
                 </li>
 <!--                 <li>
-                  <a>价格⬇</a>
+                  <a>价格⬇</a> 
                 </li> -->
               </ul>
             </div>
@@ -58,7 +58,9 @@
                 <div class="list-wrap">
                   <div class="p-img">
                     <a href="item.html" target="_blank">
-                      <img :src="good.defaultImg" />
+                      <router-link :to="`/detail/${good.id}`">
+                        <img :src="good.defaultImg" />
+                      </router-link>
                     </a>
                   </div>
                   <div class="price">

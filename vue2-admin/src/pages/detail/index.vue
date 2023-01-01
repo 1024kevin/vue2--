@@ -67,7 +67,7 @@
               </div>
               <div class="supportArea">
                 <div class="title">配 送 至</div>
-                <div class="fixWidth">广东省 深圳市 宝安区</div>
+                <div class="fixWidth">江西省 上饶市 广丰区</div>
               </div>
             </div>
           </div>
@@ -639,7 +639,8 @@ export default {
             .add {
               float: left;
 
-              a {
+              a{
+                cursor:pointer;
                 background-color: #e1251b;
                 padding: 0 25px;
                 font-size: 16px;
